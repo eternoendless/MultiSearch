@@ -52,6 +52,14 @@ class SearchController extends AbstractController {
   public function bing() {
     return $this->_search(self::BING);
   }
+  
+  /**
+   * Executes a Yahoo Search
+   * @return ResponseInterface
+   */
+  public function yahoo() {
+    return $this->_search(self::YAHOO);
+  }
 
   /////////////////////////////////////////////////////////////////////////////
   // PRIVATE METHODS

@@ -19,7 +19,7 @@ class GoogleSearch extends AbstractSearchEngine {
    * Google search results' URLs aren't direct links to the external address,
    * but *relative* links to a Google address that receives the external address
    * as a parameter.
-   * This URL is prepended to this address if the external address cannot be extracted.
+   * This URL is prepended to the address if the external address cannot be extracted.
    */
   const BASE_URL = "http://www.google.com";
   
@@ -78,10 +78,6 @@ class GoogleSearch extends AbstractSearchEngine {
     $html = $this->getHTML();
     
     /* @var $doc QueryPath */
-    /*$doc = htmlqp($html, null, [
-      'convert_from_encoding' => 'iso-8859-1',
-      'convert_to_encoding' => 'UTF-8'
-    ]);*/
     $doc = $this->getQueryPath($html);
     
     $result = new SearchResult();
