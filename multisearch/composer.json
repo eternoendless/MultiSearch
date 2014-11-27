@@ -1,0 +1,6 @@
+{
+  "require": {
+    "twig/twig": "1.*",
+    "querypath/QueryPath": ">=3.0.0"
+  }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MultiSearch</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="js/multisearch.js"></script>
+  </head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Multi engine search</h1>
+    </div>
+    
+    <nav class="navbar navbar-default" role="navigation">
+      <form class="navbar-form navbar-left" role="search" action="#">
+        <div class="form-group">
+          <input type="text" id="searchBox" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" id="searchButton" class="btn btn-default">Submit</button>
+      </form>
+    </nav>
+    
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist" id="searchTabs">
+        <li role="presentation" class="active"><a href="#" data-provider="google">Google</a></li>
+        <li role="presentation"><a href="#" data-provider="bing">Bing</a></li>
+        <li role="presentation"><a href="#" data-provider="yahoo">Yahoo</a></li>
+      </ul>
+
+      <div class="tab-content" id="searchResults"></div>
+    </div>
+    
+  </div>
+</body>
+</html>
