@@ -81,6 +81,7 @@ class GoogleSearch extends AbstractSearchEngine {
     $doc = $this->getQueryPath($html);
     
     $result = new SearchResult();
+    $result->setQuery($this->query);
     $result->setCurrentPage($this->page);
     
     /* @var $resultsBlock \QueryPath\DomQuery */

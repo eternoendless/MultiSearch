@@ -98,7 +98,7 @@ class SearchController extends AbstractController {
     $twig = $this->_getTwig();
     
     return new HtmlResponse(
-      $twig->render('searchResults.twig', [
+      $twig->render(($result->count() > 0)? 'searchResults.twig' : 'noResults.twig', [
         'result' => $result
       ])
     );

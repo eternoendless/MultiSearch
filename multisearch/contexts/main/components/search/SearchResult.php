@@ -23,10 +23,20 @@ class SearchResult extends ArrayObject {
    */
   private $currentPage;
   
+  /**
+   * The search query
+   * @var string
+   */
+  private $query;
+  
+  /**
+   * A string showing the number of results
+   * @var string
+   */
   private $resultsCount;
   
   /**
-   *
+   * Results offset
    * @var int
    */
   private $offset;
@@ -47,6 +57,16 @@ class SearchResult extends ArrayObject {
   }
 
   /**
+   * Sets the query for this search
+   * @param string $query
+   * @return \SearchResult
+   */
+  public function setQuery($query) {
+    $this->query = $query;
+    return $this;
+  }
+
+  /**
    * Sets the current page number
    * @param int $currentPage
    */
@@ -55,14 +75,32 @@ class SearchResult extends ArrayObject {
     return $this;
   }
   
+  /**
+   * Sets the results count
+   * @param string $resultsCount
+   * @return \SearchResult
+   */
   public function setResultsCount($resultsCount) {
     $this->resultsCount = $resultsCount;
     return $this;
   }
   
+  /**
+   * Sets the results offset
+   * @param int $offset
+   * @return \SearchResult
+   */
   public function setOffset($offset) {
     $this->offset = $offset;
     return $this;
+  }
+  
+  /**
+   * Returns the query for this search
+   * @return string
+   */
+  public function getQuery() {
+    return $this->query;
   }
 
   /**
@@ -73,10 +111,18 @@ class SearchResult extends ArrayObject {
     return $this->currentPage;
   }
   
+  /**
+   * Returns the number of results for this search
+   * @return string
+   */
   public function getResultsCount() {
     return $this->resultsCount;
   }
 
+  /**
+   * Returns the offset for this result set
+   * @return int
+   */
   public function getOffset() {
     return $this->offset;
   }
