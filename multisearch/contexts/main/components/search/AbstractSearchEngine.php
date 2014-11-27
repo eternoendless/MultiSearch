@@ -26,5 +26,25 @@ abstract class AbstractSearchEngine {
   // PRIVATE METHODS
   /////////////////////////////////////////////////////////////////////////////
 
+  /**
+   * Returns a QueryPage object from the provided HTML
+   * @param string $html
+   * @return QueryPath
+   */
+  protected function getQueryPath($html) {
+    // disable warnings
+    libxml_use_internal_errors(true);
+    // fix codepage (see https://github.com/technosophos/querypath/issues/94#issuecomment-45725727)
+    $doc = new DOMDocument();
+    $doc->loadHTML('<?xml encoding="UTF-8">' . $html);
+    foreach ($doc->childNodes as $item) {
+      if ($item->nodeType == XML_PI_NODE) {
+        $doc->removeChild($item);
+      }
+    }
+    $doc->encoding = 'UTF-8';
+    
+    return qp($doc);
+  }
 
 }

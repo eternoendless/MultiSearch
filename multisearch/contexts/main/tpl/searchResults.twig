@@ -1,9 +1,9 @@
-<p>{{ result.getResultCount() }}</p>
+<p>{{ result.getResultsCount() }}</p>
 <ol start="{{ result.getOffset() }}">
 {% for item in result %}
   <li>
     <h4><a href="{{ item.url }}">{{ item.title|raw }}</a></h4>
-    <p>{{ item.urlPreview|raw }}</p>
+    <p><cite>{{ item.urlPreview|raw }}</cite></p>
     <p>{{ item.summary|raw }}</p>
   </li>
 {% endfor %}

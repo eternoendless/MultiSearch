@@ -1,18 +1,18 @@
 <?php
 /**
- * Executes a Google Search
+ * Executes a Bing Search
  */
-class GoogleSearch extends AbstractSearchEngine {
+class BingSearch extends AbstractSearchEngine {
   
   /**
    * The name of this service
    */
-  const SERVICE_NAME = "Google";
+  const SERVICE_NAME = "Bing";
   
   /**
    * Base search URL
    */
-  const SEARCH_URL = "http://www.google.com/search?q=%s&start=%d";
+  const SEARCH_URL = "http://www.bing.com/search?q=%s&first=%d";
   
   /**
    * The base URL for Google search results.
@@ -21,7 +21,7 @@ class GoogleSearch extends AbstractSearchEngine {
    * as a parameter.
    * This URL is prepended to this address if the external address cannot be extracted.
    */
-  const BASE_URL = "http://www.google.com";
+  const BASE_URL = "http://www.bing.com";
   
   /**
    * The number of search results per page returned by this engine
@@ -78,36 +78,38 @@ class GoogleSearch extends AbstractSearchEngine {
     $html = $this->getHTML();
     
     /* @var $doc QueryPath */
-    /*$doc = htmlqp($html, null, [
-      'convert_from_encoding' => 'iso-8859-1',
-      'convert_to_encoding' => 'UTF-8'
-    ]);*/
+    
     $doc = $this->getQueryPath($html);
+    //$doc = htmlqp($html);
+    
+    //exit($html);
     
     $result = new SearchResult();
     $result->setCurrentPage($this->page);
     
     /* @var $resultsBlock \QueryPath\DomQuery */
-    $resultsBlock = $doc->find('#search li.g');
+    $resultsBlock = $doc->find('#b_results > li');
     
     foreach ($resultsBlock as $blockItem) {
       //print($blockItem->html()."\n\n\n\n");
       
-      $title = $blockItem->find('h3 > a');
+      $title = $blockItem->find('h2 a');
+      if ($title->count() == 0)
+        continue;
       
       // extract item URL
       $matchedUrl = html_entity_decode($title->attr('href'));
-      // try and extract the real url
-      if (preg_match('/\/\?q=(.+)&sa=/', $matchedUrl, $matches))
-        $url = $matches[1];
-      else
+      // urls are absolute unless it's a bing resource
+      if (preg_match('/^\//', $matchedUrl))
         $url = self::BASE_URL . $matchedUrl;
+      else
+        $url = $matchedUrl;
       
       $resultItem = new SearchResultItem([
         'title' => $title->innerHTML(),
         'url'   => $url,
-        'urlPreview' => $blockItem->find('cite')->innerHTML(),
-        'summary' => $blockItem->find('span.st')->innerHTML()
+        'urlPreview' => $blockItem->find('.b_attribution cite')->innerHTML(),
+        'summary' => $blockItem->find('.b_caption p')->innerHTML()
       ]);
       
       //Logger::debug($resultItem);
@@ -115,9 +117,9 @@ class GoogleSearch extends AbstractSearchEngine {
       $result->append($resultItem);
     }
     
-    $result->hasNextPage($doc->find('#nav td:last-child a')->count() > 0);
+    $result->hasNextPage($doc->find('.b_pag li:last-child a.sb_pagN')->count() > 0);
     
-    $resultsCount = $doc->find('#resultStats')->innerHTML();
+    $resultsCount = $doc->find('.sb_count')->innerHTML();
     if (!empty($resultsCount)) {
       $result->setResultsCount($resultsCount);
     }
